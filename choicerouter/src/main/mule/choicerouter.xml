@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="a5fe563e-2bf1-4779-a267-e4b292fcb546" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="choicerouterFlow" doc:id="01ad363f-124d-404e-ae60-8b3744f8e642" >
+		<http:listener doc:name="Listener" doc:id="2a2bfdc1-928d-4e25-9d47-370afa4d267f" config-ref="HTTP_Listener_config" path="/sample"/>
+		<set-variable value="#[attributes.queryParams.fruits]" doc:name="Set Variable" doc:id="42188d7c-44bf-4c6d-98f8-e63f9489bf21" variableName="fruits"/>
+		<choice doc:name="Choice" doc:id="14ac535d-473e-4abd-bbd0-147bb8eee211" >
+			<when expression='#[vars.fruits=="apple"]'>
+				<set-payload value="hello this is apple" doc:name="Set Payload" doc:id="2bb72eec-9f7b-4cb7-b262-42b613699709" />
+				<logger level="INFO" doc:name="Logger" doc:id="1287ca5c-902c-4a6d-86ed-8c4628ea7617" message="#[payload]"/>
+			</when>
+			<when expression='#[vars.fruits=="banana"]' >
+				<set-payload value="hello this is banana" doc:name="Set Payload" doc:id="494c4f20-b572-4ced-98f8-d67f556ea844" />
+				<logger level="INFO" doc:name="Logger" doc:id="09f85efe-8f93-48cb-b9e2-7d0f069f8fa2" message="#[payload]"/>
+			</when>
+			<otherwise >
+				<logger level="INFO" doc:name="Logger" doc:id="47b6ebd1-879d-4935-bccb-e04535d1f112" message="hello this is default"/>
+			</otherwise>
+		</choice>
+	</flow>
+</mule>
