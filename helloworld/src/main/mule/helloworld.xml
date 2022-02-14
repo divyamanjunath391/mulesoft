@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="052aeac6-5103-4c30-bfd0-e2c0d77739d8" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="helloworldFlow" doc:id="f2c7f827-ac5b-4ef2-8b30-a838d1fbbf9e" >
+		<http:listener doc:name="Listener" doc:id="b81b3e0a-f900-4812-8af6-f09d3b7c8b20" config-ref="HTTP_Listener_config" path="/sample"/>
+		<set-payload value="welcome to mulesoft" doc:name="Set Payload" doc:id="525766f8-fb62-49cf-96cd-71b7df61d0af" />
+		<logger level="INFO" doc:name="Logger" doc:id="21862088-e895-4977-838b-bf4c5ab0df8a" message="#[payload]"/>
+		<flow-ref doc:name="Flow Reference" doc:id="24ff0e83-da23-4477-962e-7abde247370b" name="subflow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="155f7cac-0c81-4284-be1f-14d24ded83cd" name="pvtflow"/>
+	</flow>
+	<sub-flow name="subflow" doc:id="e076a385-2837-4419-b46f-0988ef9ca32f" >
+		<logger level="INFO" doc:name="Logger" doc:id="196119ca-7c17-4851-bc32-17d92da4a99c" message="sub flow started"/>
+	</sub-flow>
+	<flow name="pvtflow" doc:id="01cdc634-3494-495e-8d81-cc14505c59ec" >
+		<logger level="INFO" doc:name="Logger" doc:id="23abf0b5-c758-4ff7-9ebc-0ff03c225947" message="pvt flow started"/>
+	</flow>
+</mule>
