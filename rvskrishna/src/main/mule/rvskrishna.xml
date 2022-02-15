@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="93327aa4-3f79-484a-a774-1b91d5f537ec" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="rvskrishnaFlow" doc:id="99315770-0f33-4425-a02e-99557d97280f" >
+		<http:listener doc:name="Listener" doc:id="b28d2409-6c17-4a00-83d8-9261f86b4bc1" config-ref="HTTP_Listener_config" path="/rvs"/>
+		<set-payload value="best person" doc:name="Set Payload" doc:id="86bce376-9d6e-494e-a34d-d27bce762e34" />
+		<logger level="INFO" doc:name="Logger" doc:id="79b7280a-3e0a-4164-a60b-106b03d04d43" message="#[payload]"/>
+	</flow>
+</mule>
